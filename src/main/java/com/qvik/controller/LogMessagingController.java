@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +34,14 @@ public class LogMessagingController {
 
 	@PostMapping(value = "addmessage")
 	public String getLogs(@RequestBody Map<String, Object> log) {
-		logMessagingService.addMessage((String) log.get("name"), (Integer)log.get("logId"),
+		logMessagingService.addMessage((String) log.get("name"), (Integer) log.get("logId"),
 				(String) log.get("message"));
 		return "Logs Successfully added";
+	}
+
+	@PatchMapping(value = "set_max_age/{maxAge}")
+	public String setMaxAge(@PathVariable int maxAge) {
+		logMessagingService.setMaxAge(maxAge);
+		return "Updated Max age";
 	}
 }

@@ -9,4 +9,6 @@ public interface LogMessaging {
 	
 	void addMessage(String name, int logId, String message);
 	
+	void setMaxAge(int maxAge);
+	
 }

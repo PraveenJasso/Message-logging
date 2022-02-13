@@ -25,4 +25,9 @@ public class LogMessagingServiceImpl implements LogMessagingService {
 		logMessaging.addMessage(name, logId, message);
 	}
 
+	@Override
+	public void setMaxAge(int maxAge) {
+		logMessaging.setMaxAge(maxAge);
+	}
+
 }

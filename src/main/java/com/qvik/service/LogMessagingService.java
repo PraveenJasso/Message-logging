@@ -7,4 +7,5 @@ public interface LogMessagingService {
 	
 	List<Map> getLog(int logId);
 	void addMessage(String name, int logId, String message);
+	void setMaxAge(int maxAge);
 }
