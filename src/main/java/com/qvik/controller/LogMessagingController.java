@@ -22,8 +22,8 @@ public class LogMessagingController {
 	private LogMessagingService logMessagingService;
 
 	@GetMapping
-	public String hello() {
-		return "Hello world ";
+	public Map hello() {
+		return logMessagingService.LogMessageStatistics();
 	}
 
 	@GetMapping(value = "{logId}")

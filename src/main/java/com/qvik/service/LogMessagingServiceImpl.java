@@ -30,4 +30,10 @@ public class LogMessagingServiceImpl implements LogMessagingService {
 		logMessaging.setMaxAge(maxAge);
 	}
 
+	@Override
+	public Map<String, Object> LogMessageStatistics() {
+		// TODO Auto-generated method stub
+		return logMessaging.LogMessageStatistics();
+	}
+
 }

@@ -7,7 +7,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Repository;
@@ -59,6 +62,7 @@ public class LogMessagingImpl implements LogMessaging {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setMaxAge(int maxAge) {
 		for (Integer key : logs.keySet()) {
@@ -69,5 +73,34 @@ public class LogMessagingImpl implements LogMessaging {
 				}
 			}
 		}
+	}
+
+	@Override
+		public Map<String, Object> LogMessageStatistics() {
+			ConcurrentHashMap<Integer, List<Map>> data = logs;
+			Map<String,Object> MapResult = new HashMap<>();
+			if(Objects.isNull(data) || data.isEmpty()) {
+				MapResult.put("message", "Hello Word!!!!");
+				return MapResult;
+			}
+			MapResult.put("currentNoOfStoredLogs", data.size());
+			List<Map> logList = new ArrayList<>();
+			Map<Integer,Integer> logsSize = new HashMap<>();
+			for (Integer key : data.keySet()) {
+				logList.addAll(data.get(key));
+				logsSize.put(key, data.get(key).size());
+			}
+			List<Integer> maxAges = new ArrayList<>();
+			for (Map map : logList) {
+				if (Objects.nonNull(map.get("maxAge"))) {
+					maxAges.add((Integer) map.get("maxAge"));	
+				}
+			}
+			Integer max = maxAges.stream().mapToInt(v -> v).max().orElseThrow(NoSuchElementException::new);
+					MapResult.put("maxAgeLimit", max);
+					MapResult.put("totalNoOfStoredMessages", logList.size());
+				OptionalDouble average = logsSize.values().stream().mapToInt(number -> number.intValue()).average();
+				MapResult.put("averageNoOfMsgPerLog", Integer.parseInt(String.valueOf(Math.round(average.getAsDouble()))));
+				return MapResult;
 	}
 }
