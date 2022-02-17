@@ -2,6 +2,7 @@ package com.qvik.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface LogMessaging {
 	
@@ -12,5 +13,7 @@ public interface LogMessaging {
 	void setMaxAge(int maxAge);
 	
 	Map<String, Object> LogMessageStatistics();
+	
+	ConcurrentHashMap<Integer, List<Map>> getAllLogs();
 	
 }
